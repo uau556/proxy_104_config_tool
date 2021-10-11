@@ -1,0 +1,34 @@
+
+docker rm some-postgres
+docker run --name some-postgres -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+
+-- Table: public.proxy_config
+
+-- DROP TABLE public.proxy_config;
+
+CREATE TABLE IF NOT EXISTS public.proxy_config
+(
+    pair_sp integer,
+    channel_sp integer,
+    ip_fep_local_sp_a "text",
+    ip_fep_local_sp_h "text",
+    rtu_name "text",
+    rtu_ip "text",
+    rtu_t1 integer,
+    rtu_t2 integer,
+    rtu_t3 integer
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.proxy_config
+    OWNER to postgres;
+	
+COPY proxy_config(pair_sp,channel_sp,ip_fep_local_sp_a,ip_fep_local_sp_h,rtu_name,rtu_ip,rtu_t1,rtu_t2,rtu_t3)
+FROM 'C:\Data\postgres.csv'
+DELIMITER ';'
+CSV HEADER;
+
+
+
+
